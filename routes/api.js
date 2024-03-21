@@ -8,4 +8,6 @@ router.use(categoriesController)
 router.use(accountsController)
 router.use(billCtrl)
 
+const ServiceController = require('../controllers/Service');
+router.use(ServiceController)
 module.exports = router
