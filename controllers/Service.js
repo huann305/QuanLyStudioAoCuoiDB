@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 //addService
-const Services = require('../models/Services')
-router.post('/Services', async function(req, res, next) {
+const Services = require('../models/services')
+router.post('/services', async function(req, res, next) {
     try {
         const newService = new Services(req.body);
         const saveService = await newService.save();
@@ -13,7 +13,7 @@ router.post('/Services', async function(req, res, next) {
     }
 });
 //getService
-router.get('/Services', async function(req, res, next){
+router.get('/services', async function(req, res, next){
     try {
         const newService = await Services.find();
         res.status(200).json(newService);
@@ -21,20 +21,46 @@ router.get('/Services', async function(req, res, next){
         res.status(500).json(error);
     }
 });
-//UpService
-router.put('/:id', async function(req, res, next){
+router.get('/services/:id', async function(req, res, next){
     try {
-        await Services.findByIdAndUpdate(req.params.id, req.body);
-        res.status(200).json("Service updated successfully");
+        const newService = await Services.findOne({ _id: req.params.id });
+        res.status(200).json(newService);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
+//UpService
+router.put('/services/:id', async function(req, res, next){
+    try {
+        const result = await Services.findByIdAndUpdate(req.params.id, req.body);
+        if(!result) {
+            res.status(404).json({
+                message: "Service not found"
+            });
+        } else {
+            res.status(200).json({
+                message: "Service updated successfully",
+                data : result
+            });
+        }
     } catch (error) {
         res.status(500).json(error);
     }
 });
 //DelService
-router.delete('/:id', async function(req, res, next){
+router.delete('/services/:id', async function(req, res, next){
     try {
-        await Services.findByIdAndDelete(req.params.id);
-        res.status(200).json("Service deleted successfully");
+        const result = await Services.findByIdAndDelete(req.params.id);
+        if (!result) {
+            res.status(404).json({
+                message: "Service not found"
+            });
+        } else {
+            res.status(200).json({
+                message: "Service deleted successfully",
+                data : result
+            });
+        }
     } catch (error) {
         res.status(500).json(error);
     }

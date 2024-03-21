@@ -1,45 +1,75 @@
 const express = require("express");
 const router = express.Router();
-const task = require("../models/TaskModel");
+const Task = require("../models/TaskModel");
 
-// http://localhost:3000/tasks
+//get all tasks
 router.get("/tasks", async (req, res, next) => {
   try {
-    const tasks = await task.find(); //lấy về toàn bộ công việc có trong bảng
+    const tasks = await Task.find(); //lấy về toàn bộ công việc có trong bảng
     res.json(tasks);
   } catch (err) {
     console.log("ERR: " + err);
   }
 });
 
-// http://localhost:3000/tasks/add
-router.post("/tasks/add", async (req, res, next) => {
+//get task by id
+router.get("/tasks/:id", async (req, res, next) => {
   try {
-    const newTask = new task(req.body); //tạo đối tượng mới từ dữ liệu
+    const task = await Task.findOne({ _id: req.params.id });
+    if (task) {
+      res.json(task);
+    } else {
+      res.status(404).json({ message: "Task not found" });
+    }
+  } catch (err) {
+    console.log("ERR: " + err);
+  }
+})
+
+//add task
+router.post("/tasks", async (req, res, next) => {
+  try {
+    const newTask = new Task(req.body); //tạo đối tượng mới từ dữ liệu
     const saveTask = await newTask.save(); //lưu vào bảng dữ liệu
-    res.status(200).json(saveTask);
+    res.status(200).json({
+      message: "Task created successfully",
+      data: saveTask,
+    });
   } catch (err) {
     console.log("ERR: " + err);
   }
 });
 
-// http://localhost:3000/tasks/update/123456
-router.put("/tasks/update/:_id", async (req, res, next) => {
+router.put("/tasks/:id", async (req, res, next) => {
   try {
-    await task.findByIdAndUpdate(req.params._id, req.body);
-    res.status(200).json("Task updated successfully");
+    const result = await Task.findByIdAndUpdate(req.params.id, req.body);
+    if(result) {
+      res.status(200).json({
+        message: "Task updated successfully",
+        data: result
+      });
+    }else {
+      res.status(404).json({ message: "Task not found" });
+    }
   } catch (err) {
     console.log("ERR: " + err);
   }
 });
 
-// http://localhost:3000/tasks/delete/123456
-router.delete("/tasks/delete/:_id", async (req, res, next) => {
+router.delete("/tasks/:_id", async (req, res, next) => {
   try {
-    await task.findByIdAndDelete(req.params._id);
-    res.status(200).json("Task deleted successfully");
+    const result = await Task.findByIdAndDelete(req.params._id);
+    if(result) {
+      res.status(200).json({
+        message: "Task deleted successfully",
+        data: result
+      });
+    }else {
+      res.status(404).json({ message: "Task not found" });
+    }
   } catch (error) {
     console.log(error);
   }
 });
+
 module.exports = router;
