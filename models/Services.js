@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const ServicesSchema = new mongoose.Schema({
     serviceName: {type: String},
     description: {type: String},
+    image: {type: String},
 },{
     timestamps: true,
 });

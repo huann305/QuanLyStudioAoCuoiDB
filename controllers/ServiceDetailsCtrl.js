@@ -51,6 +51,20 @@ router.delete('/serviceDetails/:id', async function(req, res, next) {
     }
 })
 
+//get service detail by id service
+router.get('/serviceDetails/service/:id', async function(req, res, next) {
+    try {
+        const serviceDetails = await ServiceDetails.find({ idService: req.params.id }).populate('idService');
+        if(serviceDetails) {
+            res.status(200).json(serviceDetails);
+        }else {
+            res.status(404).json({ message: "Service Details not found" });
+        }
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
 router.put('/serviceDetails/:id', async function(req, res, next) {
     try {
         const updateServiceDetails = await ServiceDetails.findByIdAndUpdate(req.params.id, req.body);
