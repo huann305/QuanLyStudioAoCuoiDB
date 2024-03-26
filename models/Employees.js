@@ -8,7 +8,8 @@ const EmployeesSchema = new mongoose.Schema({
     adress: {type: String},
     phoneNumber: {type: String, unique: true},
     note: {type: String},
-    role: {type: String}
+    role: {type: String},
+    image: {type: String},
 },{
     timestamps: true,
 });
