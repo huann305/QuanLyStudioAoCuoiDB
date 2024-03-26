@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Employee_TasksSchema = new mongoose.Schema({
     idEmployee: {type: String, ref: 'Employees'},
     idTask: {type: String, ref: 'Task'},
+    idCustomer: {type: String, ref: 'Customers'},
     status: {type: String},
     note: {type: String},
     dateStart: {type: Date},

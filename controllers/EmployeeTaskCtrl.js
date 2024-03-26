@@ -5,7 +5,7 @@ const EmployeeTask = require('../models/Employee_Tasks')
 
 router.get('/tasksnemployee', async function(req, res, next) {
     try {
-        const tasks = await EmployeeTask.find().populate('idEmployee').populate('idTask');
+        const tasks = await EmployeeTask.find().populate('idEmployee').populate('idTask').populate('idCustomer');
         res.json(tasks);
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -26,7 +26,7 @@ router.post('/tasksnemployee', async function(req, res, next) {
 //update employee task
 router.put('/tasksnemployee/:id', async function(req, res, next) {
     try {
-        const updateTask = await EmployeeTask.findByIdAndUpdate(req.params.id, req.body).populate('idEmployee').populate('idTask');
+        const updateTask = await EmployeeTask.findByIdAndUpdate(req.params.id, req.body).populate('idEmployee').populate('idTask').populate('idCustomer');
         if(updateTask) {
             res.status(200).json(updateTask);
         }else {
@@ -40,7 +40,7 @@ router.put('/tasksnemployee/:id', async function(req, res, next) {
 //get employee task by id
 router.get('/tasksnemployee/:id', async function(req, res, next) {
     try {
-        const task = await EmployeeTask.findOne({ _id: req.params.id }).populate('idEmployee').populate('idTask');
+        const task = await EmployeeTask.findOne({ _id: req.params.id }).populate('idEmployee').populate('idTask').populate('idCustomer');
         if(task) {
             res.json(task);
         }else {
