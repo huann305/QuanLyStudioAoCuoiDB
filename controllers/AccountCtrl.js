@@ -15,7 +15,7 @@ router.post('/login', async function (req, res, next) {
         if (account) {
             res.status(200).json(account)
         } else {
-            res.status(404).json(null)
+            res.status(404).json({status: 404, message: 'Account not found'})
         }
     } catch (error) {
         res.status(500).json({ message: error.message })

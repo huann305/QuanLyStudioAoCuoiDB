@@ -5,11 +5,12 @@ const EmployeesSchema = new mongoose.Schema({
     password: {type: String},
     fullName: {type: String},
     email: {type: String, unique: true},
-    adress: {type: String},
+    address: {type: String},
     phoneNumber: {type: String, unique: true},
     note: {type: String},
     role: {type: String},
     image: {type: String},
+    status: {type: Number},
 },{
     timestamps: true,
 });
