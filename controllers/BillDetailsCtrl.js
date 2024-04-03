@@ -67,4 +67,17 @@ router.delete('/billdetails/:id', async function (req, res, next) {
     }
 })
 
+router.get("/listDetailBills/:idBill", async function (req, res, next) {
+    try {
+      const DetailBill = await BillDetails.find({ idBill: req.params.idBill });
+      if (DetailBill) {
+        res.json(DetailBill);
+      } else {
+        res.status(404).json({ message: "BillDetails not found" });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
 module.exports = router

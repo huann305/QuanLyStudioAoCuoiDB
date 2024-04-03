@@ -80,6 +80,7 @@ router.put('/services/:id', Upload.single('image'), async function(req, res, nex
             });
         }
     } catch (error) {
+        console.log(error.message)
         res.status(500).json(error);
     }
 })

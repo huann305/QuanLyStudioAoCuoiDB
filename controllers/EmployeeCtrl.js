@@ -69,36 +69,38 @@ router.post('/employees', async function (req, res, next) {
 // })
 
 //update employee
-router.put('/employees/:id', async function (req, res, next) {
-    try {
-        const updateEmployee = await Employee.findByIdAndUpdate(req.params.id, req.body);
-        if (updateEmployee) {
-            updateEmployee.password = undefined
-            res.status(200).json(updateEmployee);
-        } else {
-            res.status(404).json({ message: "Employee not found" });
-        }
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-})
-
-//update employee with image
-// router.put('/employees/:id', Upload.single('image'), async function(req, res, next) {
+// router.put('/employees/:id', async function (req, res, next) {
 //     try {
-//         const {file} = req
-//         const urlImage = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`
-//         const updateEmployee = await Employee.findByIdAndUpdate(req.params.id, {...req.body, image: urlImage});
-//         if(updateEmployee) {
+//         const updateEmployee = await Employee.findByIdAndUpdate(req.params.id, req.body);
+//         if (updateEmployee) {
 //             updateEmployee.password = undefined
 //             res.status(200).json(updateEmployee);
-//         }else {
+//         } else {
 //             res.status(404).json({ message: "Employee not found" });
 //         }
 //     } catch (error) {
-//         res.status(500).json({message: error.message})
+//         res.status(500).json({ message: error.message })
 //     }
 // })
+
+//update employee with image
+router.put('/employees/:id', Upload.single('image'), async function(req, res, next) {
+    try {
+        console.log(req.file)
+        const {file} = req
+        const urlImage = `${req.protocol}://${req.get('host')}/uploads/${file?.filename}`
+        const updateEmployee = await Employee.findByIdAndUpdate(req.params.id, {...req.body, image: urlImage});
+        if(updateEmployee) {
+            updateEmployee.password = undefined
+            res.status(200).json(updateEmployee);
+        }else {
+            res.status(404).json({ message: "Employee not found" });
+        }
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json({message: error.message})
+    }
+})
 
 //delete employee
 router.delete('/employees/:id', async function (req, res, next) {

@@ -74,6 +74,7 @@ router.put('/serviceDetails/:id', async function(req, res, next) {
             res.status(404).json({ message: "Service Details not found" });
         }
     } catch (error) {
+        console.log(error.message)
         res.status(500).json({message: error.message})
     }
 })
