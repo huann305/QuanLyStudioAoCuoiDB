@@ -1,11 +1,10 @@
-const mongoose = require("mongoose");
-mongoose
-  .connect("mongodb://localhost:27017/DatabaseXuong", {
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb+srv://bahuan305:bahuan305@databasexuong.lgfudox.mongodb.net/?retryWrites=true&w=majority&appName=DatabaseXuong', {
     useNewUrlParser: true,
-  })
-  .then(() => {
-    console.log("Successfully connected to MongoDB.");
-  })
-  .catch((err) => {
-    console.error("Connection error", err);
-  });
+    useUnifiedTopology: true,
+}).then(response=>{
+    console.log('MongoDB Connection Succeeded.')
+}).catch(error=>{
+    console.log('Error in DB connection: ' + error)
+});
