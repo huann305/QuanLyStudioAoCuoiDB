@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://bahuan305:bahuan305@databasexuong.lgfudox.mongodb.net/?retryWrites=true&w=majority&appName=DatabaseXuong', {
+mongoose.connect('mongodb+srv://bahuan305:bahuan305@databasexuong.lgfudox.mongodb.net/DatabaseXuong?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(response=>{

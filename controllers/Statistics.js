@@ -64,7 +64,7 @@ router.get('/sales', async function (req, res, next) {
 
             //count idService in billDetails
             for (let j = 0; j < billDetails.length; j++) {
-                listIdServiceDetails.push(billDetails[j].idServiceDetails)
+                listIdServiceDetails.push(billDetails[j]?.idServiceDetails)
                 listBillDetails.push(billDetails[j])
             }
         }
@@ -81,7 +81,7 @@ router.get('/sales', async function (req, res, next) {
             //count idService in billDetails
             let count = 0
             for(let j = 0; j < listServiceDetails.length; j++) {
-                if(listServiceDetails[j].idService == services[i]._id.toString()) {
+                if(listServiceDetails[j]?.idService == services[i]._id.toString()) {
                     count += listBillDetails[j].price
                 }
             }
