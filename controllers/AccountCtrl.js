@@ -55,6 +55,16 @@ router.get('/login', async (req, res) => {
     }
 })
 
+router.put('/accounts/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const updateAccount = await Employees.findByIdAndUpdate(id, req.body, { new: true })
+        res.status(200).json(updateAccount)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+    })
+
 //register
 router.post('/register', async function (req, res, next) {
     try {
