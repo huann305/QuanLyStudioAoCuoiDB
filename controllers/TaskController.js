@@ -5,7 +5,7 @@ const Task = require("../models/TaskModel");
 //get all tasks
 router.get("/tasks", async (req, res, next) => {
   try {
-    const tasks = await Task.find(); //lấy về toàn bộ công việc có trong bảng
+    const tasks = await Task.find().sort({ createdAt: -1 }); //lấy về toàn bộ công việc có trong bảng
     res.json(tasks);
   } catch (err) {
     console.log("ERR: " + err);
@@ -56,9 +56,9 @@ router.put("/tasks/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/tasks/:_id", async (req, res, next) => {
+router.delete("/tasks/:id", async (req, res, next) => {
   try {
-    const result = await Task.findByIdAndDelete(req.params._id);
+    const result = await Task.findByIdAndDelete(req.params.id);
     if(result) {
       res.status(200).json({
         message: "Task deleted successfully",

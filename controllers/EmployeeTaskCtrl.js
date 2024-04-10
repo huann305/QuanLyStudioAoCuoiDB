@@ -37,10 +37,10 @@ router.put('/tasksnemployee/:id', async function(req, res, next) {
     }
 })
 
-//get employee task by id
+//get employee task by id task
 router.get('/tasksnemployee/:id', async function(req, res, next) {
     try {
-        const task = await EmployeeTask.findOne({ _id: req.params.id }).populate('idEmployee').populate('idTask').populate('idCustomer');
+        const task = await EmployeeTask.find({ idTask: req.params.id }).populate('idEmployee').populate('idTask').populate('idCustomer');
         if(task) {
             res.json(task);
         }else {
